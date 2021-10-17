@@ -12,7 +12,6 @@ COLUMNS = [
     'imo',
     'ship_name',
     'technical_efficiency_number'
-    'qqq'
 ]
 
 
