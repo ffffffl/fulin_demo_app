@@ -1,7 +1,5 @@
 from django.db import models
-def main():
-    conn_string = "host='localhost' dbname='web' user='postgres' password='fulin0908B'"
-    # Local database
+
 
 # Create your models here.
 class Greeting(models.Model):
