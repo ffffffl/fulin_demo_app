@@ -166,3 +166,11 @@ def emission_detail(request, imo=None):
         'success': success
     }
     return render(request, 'emission_detail.html', context)
+
+def aggregation(request):
+    query='select c.ship_type,count(distinct (c.ship_name,c.imo)),min(c.technical_efficiency_number),max(c.technical_efficiency_number) from co2emission_reduced c group by c.ship_type'
+    c=execute(query)
+    results=c.fetchall()
+    result_dict={'records':results}
+    return render(request,'aggregation.html',result_dict)
+            
