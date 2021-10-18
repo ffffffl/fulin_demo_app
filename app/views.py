@@ -209,4 +209,21 @@ def aggregation(request, page=1):
     }
     return render(request, 'aggregation.html', context)\
 
+from django.shortcuts import render
+from app.models import Greeting
+
+def pie_chart(request):
+    labels = []
+    data = []
+
+    queryset = Greeting.objects.order_by('-number')[:5]
+    for cityy in queryset:
+        labels.append(cityy.ship_type)
+        data.append(cityy.number)
+
+    return render(request, 'pie_chart.html', {
+        'labels': labels,
+        'data': data,
+    })
+
             
