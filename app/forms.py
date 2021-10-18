@@ -27,7 +27,17 @@ class ImoForm(forms.Form):
     ship_name = forms.CharField(max_length=64)
     ship_type = forms.CharField(max_length=64)
     technical_efficiency_number = forms.DecimalField(label='EEDI', max_digits=6, min_value=0, required=False)
-    issue_date = forms.DateField(label='Issue Date', auto_now=False, auto_now_add=False)
-    expiry_date = forms.DateField(label='Expiry Date', auto_now=False, auto_now_add=False)
+    issue_date = forms.DateField(widget=forms.widgets.DateInput(attrs={'type': 'date'}), required=False)
+    expiry_date = forms.DateField(widget=forms.widgets.DateInput(attrs={'type': 'date'}), required=False)
+    # my_choice_field = forms.ChoiceField(choices=get_choices('col'), required=False)
+    # my_date_field = forms.DateField(widget=forms.widgets.DateInput(attrs={'type': 'date'}), required=False)
+    
+
+class ImoForm2(forms.Form2):
+    ship_type = forms.CharField(max_length=64)
+    number = forms.IntegerField(label='Number', min_value=1, max_value=9999999)
+    MIN_EEDI = forms.DecimalField(label='MIN EEDI', max_digits=6, min_value=0, required=False)
+    MAX_EEDI = forms.DecimalField(label='MAX EEDI', max_digits=6, min_value=0, required=False)
+    AVG_EEDI = forms.DecimalField(label='AVG EEDI', max_digits=6, min_value=0, required=False)
     # my_choice_field = forms.ChoiceField(choices=get_choices('col'), required=False)
     # my_date_field = forms.DateField(widget=forms.widgets.DateInput(attrs={'type': 'date'}), required=False)
