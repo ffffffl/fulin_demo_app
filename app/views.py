@@ -167,14 +167,46 @@ def emission_detail(request, imo=None):
     }
     return render(request, 'emission_detail.html', context)
 
-def aggregation(request):
-    cursor.execute('SELECT ship_type,count(distinct(imo,ship_name)) as number,
+COLUMNS2 = [
+    'ship_type',
+    'number',
+    'MIN_EEDI',
+    'MAX_EEDI',
+    'AVG_EEDI'
+]
+
+def aggregation(request, page=1):
+    """Shows the aggregation table page"""
+    msg = None
+    order_by = request.GET.get('order_by', '')
+    order_by = order_by if order_by in COLUMNS2 else 'ship_type'
+
+    with connections['default'].cursor() as cursor:
+        num_pages = 1
+        page = clamp(page, 1, num_pages)
+        offset = (page - 1) * PAGE_SIZE
+        
+        cursor.execute(f'''
+            SELECT ship_type,count(distinct(imo,ship_name)) as number,
             min(technical_efficiency_number) as MIN_EEDI,
             max(technical_efficiency_number) as MAX_EEDI,
             avg(technical_efficiency_number) as AVG_EEDI
             FROM co2emission_reduced
-            GROUP BY ship_type'）
-    results=c.fetchall()
-    result_dict={'records':results}
-    return render(request,'aggregation.html',result_dict)
+            GROUP BY ship_type
+            ORDER BY {order_by}
+            OFFSET %s
+            LIMIT %s
+        ''', [offset, PAGE_SIZE])
+        rows = namedtuplefetchall(cursor)
+
+    context = {
+        'nbar': 'aggregation',
+        'page': page,
+        'rows': rows,
+        'num_pages': num_pages,
+        'msg': msg,
+        'order_by': order_by
+    }
+    return render(request, 'aggregation.html', context)\
+
             
