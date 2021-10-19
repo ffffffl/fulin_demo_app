@@ -167,20 +167,10 @@ def emission_detail(request, imo=None):
     }
     return render(request, 'emission_detail.html', context)
 
-COLUMNS2 = [
-    'ship_type',
-    'number',
-    'MIN_EEDI',
-    'MAX_EEDI',
-    'AVG_EEDI'
-]
-
 def aggregation(request, page=1):
     """Shows the aggregation table page"""
     msg = None
-    order_by = request.GET.get('order_by', '')
-    order_by = order_by if order_by in COLUMNS2 else 'ship_type'
-
+   
     with connections['default'].cursor() as cursor:
         num_pages = 1
         page = clamp(page, 1, num_pages)
@@ -193,7 +183,6 @@ def aggregation(request, page=1):
             avg(technical_efficiency_number) as AVG_EEDI
             FROM co2emission_reduced
             GROUP BY ship_type
-            ORDER BY {order_by}
             OFFSET %s
             LIMIT %s
         ''', [offset, PAGE_SIZE])
