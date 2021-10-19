@@ -214,7 +214,7 @@ def pie_chart(request):
     labels = []
     data = []
     with connections['default'].cursor() as cursor:
-        cursor.execute('SELECT ship_type,count(distinct(imo,ship_name)) as number FROM co2emission_reduced GROUP BY ship_type')
+        cursor.execute('SELECT ship_type,count(distinct(imo,ship_name)) as number FROM co2emission_reduced GROUP BY ship_type limit 5')
         for i in cursor:
             labels.append(i[0])
             data.append(i[1])
@@ -222,25 +222,3 @@ def pie_chart(request):
     return render(request, 'pie_chart.html', {
         'labels': labels,
         'data': data})
-
-from django.db.models import Sum
-from django.http import JsonResponse
-
-
-def home(request):
-    return render(request, 'home.html')
-
-def population_chart(request):
-    labels = []
-    data = []
-
-    with connections['default'].cursor() as cursor:
-        cursor.execute('SELECT ship_type,avg(technical_efficiency_number) as AVG_EEDI FROM co2emission_reduced GROUP BY ship_type')
-        for i in cursor:
-            labels.append(i[0])
-            data.append(i[1])
-    
-    return JsonResponse(data={
-        'labels': labels,
-        'data': data,
-    })
