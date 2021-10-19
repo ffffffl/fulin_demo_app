@@ -214,7 +214,7 @@ def pie_chart(request):
     labels = []
     data = []
     with connections['default'].cursor() as cursor:
-        cursor.execute('SELECT ship_type,count(distinct(imo,ship_name)) as number FROM co2emission_reduced GROUP BY ship_type')
+        cursor.execute('SELECT ship_type,count(distinct(imo,ship_name)) as number FROM co2emission_reduced GROUP BY ship_type ORDER BY ')
         for i in cursor:
             labels.append(i[0])
             data.append(i[1])
