@@ -209,20 +209,6 @@ def aggregation(request, page=1):
     }
     return render(request, 'aggregation.html', context)\
 
-from django.shortcuts import render
-from app.forms import ImoForm2
-def pie_chart(request):
-    labels = []
-    data = []
 
-    queryset = ImoForm2.objects.order_by('-number')[:5]
-    for cityy in queryset:
-        labels.append(cityy.ship_type)
-        data.append(cityy.number)
 
-    return render(request, 'pie_chart.html', {
-        'labels': labels,
-        'data': data,
-    })
 
-            
