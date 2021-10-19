@@ -218,16 +218,6 @@ def pie_chart(request):
         for i in cursor:
             labels.append(i[0])
             data.append(i[1])
-    labels2 = []
-    data2 = []
-    with connections['default'].cursor() as cursor:
-        cursor.execute('SELECT ship_type,avg(technical_efficiency_number) as AVG_EEDI FROM co2emission_reduced GROUP BY ship_type ORDER BY AVG_EEDI')
-        for i in cursor:
-            labels2.append(i[0])
-            data2.append(i[1])
-
     return render(request, 'pie_chart.html', {
         labels,
-        data,
-        labels2,
-        data2})
+        data})
