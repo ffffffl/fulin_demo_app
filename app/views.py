@@ -220,4 +220,5 @@ def pie_chart(request):
             data.append(i[1])
     return render(request, 'pie_chart.html', {
         'labels': labels,
-        'data': data,})
+        'data': data,
+    })
