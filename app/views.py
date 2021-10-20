@@ -180,7 +180,7 @@ def aggregation(request, page=1):
             SELECT ship_type,count(distinct(imo,ship_name)) as number,
             min(technical_efficiency_number) as min_eedi,
             max(technical_efficiency_number) as max_eedi,
-            avg(technical_efficiency_number) as age_eedi
+            avg(technical_efficiency_number) as avg_eedi
             FROM co2emission_reduced
             GROUP BY ship_type
             OFFSET %s
