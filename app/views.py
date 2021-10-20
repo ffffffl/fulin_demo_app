@@ -207,7 +207,7 @@ def pie_chart(request):
         for i in cursor:
             labels.append(i[0])
             data.append(i[1])
-    return render(request, 'pie_chart.html', {
+    return render(request, 'visualisation.html', {
         'labels': labels,
         'data': data,
     })
