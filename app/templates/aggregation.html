@@ -17,9 +17,9 @@
         <tr>
           <th class="ordering" onclick="window.location='/aggregation/?order_by=ship_type'">Ship Type</th>
           <th class="ordering" onclick="window.location='/aggregation/?order_by=number'">Number</th>
-          <th class="ordering" onclick="window.location='/aggregation/?order_by=min_eedi'">min eedi</th>
-          <th class="ordering" onclick="window.location='/aggregation/?order_by=max_eedi'">max eedi</th>
-          <th class="ordering" onclick="window.location='/aggregation/?order_by=avg_eedi'">age eedi</th>
+          <th class="ordering" onclick="window.location='/aggregation/?order_by=eedimin'">min eedi</th>
+          <th class="ordering" onclick="window.location='/aggregation/?order_by=eedimax'">max eedi</th>
+          <th class="ordering" onclick="window.location='/aggregation/?order_by=eediavg'">age eedi</th>
         </tr>
       </thead>
       {% for row in rows %}
