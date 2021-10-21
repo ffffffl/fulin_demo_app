@@ -192,7 +192,7 @@ def aggregation(request, page=1):
         'msg': msg,
         'order_by': order_by
     }
-    return render(request, 'aggregation.html', context)\
+    return render(request, 'aggregation.html', context)
 
 
 def visual(request):
