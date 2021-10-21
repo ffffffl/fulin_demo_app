@@ -176,16 +176,12 @@ def aggregation(request, page=1):
         page = clamp(page, 1, num_pages)
         offset = (page - 1) * PAGE_SIZE
         
-        cursor.execute(f'''
-            SELECT ship_type,count(distinct(imo,ship_name)) as number,
-            min(technical_efficiency_number) as min_eedi,
-            max(technical_efficiency_number) as max_eedi,
-            avg(technical_efficiency_number) as avg_eedi
+        cursor.execute('''
+            SELECT ship_type,count(distinct(imo,ship_name)) as number,min(technical_efficiency_number) as eedimin,max(technical_efficiency_number) as eedimax,avg(technical_efficiency_number) as eediavg
             FROM co2emission_reduced
             GROUP BY ship_type
             OFFSET %s
-            LIMIT %s
-        ''', [offset, PAGE_SIZE])
+            LIMIT %s''', [offset, PAGE_SIZE])
         rows = namedtuplefetchall(cursor)
 
     context = {
