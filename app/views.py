@@ -194,8 +194,7 @@ def aggregation(request, page=1):
         'page': page,
         'rows': rows,
         'num_pages': num_pages,
-        'msg': msg,
-        'order_by': order_by
+        'msg': msg
     }
     return render(request, 'aggregation.html', context)
 
