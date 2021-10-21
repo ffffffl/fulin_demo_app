@@ -199,7 +199,7 @@ def aggregation(request, page=1):
     return render(request, 'aggregation.html', context)\
 
 
-def pie_chart(request):
+def visual(request):
     labels = []
     data = []
     with connections['default'].cursor() as cursor:
@@ -207,7 +207,7 @@ def pie_chart(request):
         for i in cursor:
             labels.append(i[0])
             data.append(i[1])
-    return render(request, 'visualisation.html', {
+    return render(request, 'visual.html', {
         'labels': labels,
         'data': data,
     })
