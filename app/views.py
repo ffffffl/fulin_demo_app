@@ -167,10 +167,20 @@ def emission_detail(request, imo=None):
     }
     return render(request, 'emission_detail.html', context)
 
+
+COLUMNS_agg = [
+    'ship_type',
+    'number',
+    'eedimin',
+    'eedimax',
+    'eediavg'
+]
+
 def aggregation(request, page=1):
     """Shows the aggregation table page"""
     msg = None
-
+    order_by = request.GET.get('order_by', '')
+    order_by = order_by if order_by in COLUMNS_agg else 'imo'
     with connections['default'].cursor() as cursor:
   
         num_pages = 1
@@ -194,7 +204,8 @@ def aggregation(request, page=1):
         'page': page,
         'rows': rows,
         'num_pages': num_pages,
-        'msg': msg
+        'msg': msg,
+        'order_by': order_by
     }
     return render(request, 'aggregation.html', context)
 
