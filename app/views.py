@@ -170,19 +170,24 @@ def emission_detail(request, imo=None):
 def aggregation(request, page=1):
     """Shows the aggregation table page"""
     msg = None
-   
+
     with connections['default'].cursor() as cursor:
+  
         num_pages = 1
         page = clamp(page, 1, num_pages)
+
         offset = (page - 1) * PAGE_SIZE
-        
-        cursor.execute('''
+        cursor.execute(f'''
             SELECT ship_type,count(distinct(imo,ship_name)) as number,min(technical_efficiency_number) as eedimin,max(technical_efficiency_number) as eedimax,avg(technical_efficiency_number) as eediavg
             FROM co2emission_reduced
             GROUP BY ship_type
             OFFSET %s
             LIMIT %s''', [offset, PAGE_SIZE])
         rows = namedtuplefetchall(cursor)
+
+    imo_deleted = request.GET.get('deleted', False)
+    if imo_deleted:
+        msg = f'✔ IMO {imo_deleted} deleted'
 
     context = {
         'nbar': 'aggregation',
