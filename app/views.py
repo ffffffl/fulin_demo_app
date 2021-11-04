@@ -236,12 +236,12 @@ def visual2(request):
         queryset=cursor.fetchall()
         
     for i in queryset:
-        if i[1] is None:
+        if i[1] is None and i[0]:
             country_group.append(i[0])
             country_group_data.append(i[2])
             
     for i in queryset:
-        if i[0] is None:
+        if i[0] is None and i[1]:
             ship_type.append(i[1])
             ship_type_data.append(i[2])
 
