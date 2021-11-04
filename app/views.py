@@ -222,3 +222,21 @@ def visual(request):
         'labels': labels,
         'data': data,
     })
+
+
+def advanced(request):
+    labels = []
+    data = []
+    with connections['default'].cursor() as cursor:
+        cursor.execute('select aa.Verifier_country,count(aa.ship_key) as num
+        from (verifier v join fact f on f.Verifier_key = v.Verifier_key) as aa
+        group by aa.Verifier_country
+        order by num desc
+        limit 10')
+        for i in cursor:
+            labels.append(i[0])
+            data.append(i[1])
+    return render(request, 'visual2.html', {
+        'labels': labels,
+        'data': data,
+    })
