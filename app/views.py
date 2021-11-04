@@ -255,6 +255,11 @@ def visual2(request):
     return render(request, 'visual2.html', {
         'labels': country_group,
         'data': country_group_data,
+        'ship_type': ship_type,
+        'ship_type_data': ship_type_data,
+        'full_country':full_country,
+        'full_ship':full_ship,
+        'full_data':full_data,
     })
 
 
