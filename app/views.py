@@ -230,6 +230,9 @@ def visual2(request):
     country_group_data = []
     ship_type = []
     ship_type_data = []
+    full_country=[]
+    full_ship=[]
+    full_data=[]
     
     with connections['default'].cursor() as cursor:
         cursor.execute('select ff.verifier_country, ff.ship_type, avg(ff.total_co2_emissions) from (fact f join ship s on f.ship_key = s.ship_key join verifier v on f.verifier_key = v.verifier_key) ff  group by rollup (ff.verifier_country, ff.ship_type) order by ff.verifier_country, ff.ship_type')
@@ -240,11 +243,15 @@ def visual2(request):
             country_group.append(i[0])
             country_group_data.append(i[2])
             
-    for i in queryset:
-        if i[0] is None and i[1]:
+        elif i[0] is None and i[1]:
             ship_type.append(i[1])
             ship_type_data.append(i[2])
-
+            
+        else:
+            full_country.append(i[0])
+            full_ship.append(i[1])
+            full_data.append(i[2])
+            
     return render(request, 'visual2.html', {
         'labels': country_group,
         'data': country_group_data,
