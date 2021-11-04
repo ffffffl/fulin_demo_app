@@ -224,7 +224,7 @@ def visual(request):
     })
 
 
-def advanced(request):
+def visual2(request):
     labels = []
     data = []
     with connections['default'].cursor() as cursor:
